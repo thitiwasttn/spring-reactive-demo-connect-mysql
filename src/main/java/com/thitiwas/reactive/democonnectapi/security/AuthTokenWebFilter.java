@@ -22,6 +22,7 @@ import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.springframework.util.StringUtils.hasText;
 
@@ -72,7 +73,7 @@ public class AuthTokenWebFilter implements WebFilter {
     }
 
     private SecurityContext toSecurityContextV2(DecodedJWT claims) {
-        String userType = claims.getClaim(claimId).asString();
+        /*String userType = claims.getClaim(claimId).asString();
         // log.debug("userType :{}", userType);
         final SecurityContext securityContext = new SecurityContextImpl();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
@@ -83,6 +84,34 @@ public class AuthTokenWebFilter implements WebFilter {
                         claims.getToken(),
                         grantedAuthorities);
         securityContext.setAuthentication(usernamePasswordAuthenticationToken);
+        return securityContext;*/
+
+        /*final DefaultUserDetails userDetails =
+                DefaultUserDetails.builder()
+                        .id(claims.getClaim("id").asString())
+                        .build();
+        final SecurityContext securityContext = new SecurityContextImpl();
+        final UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                userDetails,
+                null,
+                new ArrayList<>()
+        );
+        securityContext.setAuthentication(authentication);*/
+
+
+
+        final DefaultUserDetails userDetails = DefaultUserDetails.builder()
+                .id(claims.getClaim("id").asString())
+                .build();
+        log.info("userDetails :{}", userDetails.getUsername());
+        final SecurityContext securityContext = new SecurityContextImpl();
+        final UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                claims,
+                null,
+                userDetails.getAuthorities()
+        );
+        authentication.setDetails(userDetails);
+        securityContext.setAuthentication(authentication);
         return securityContext;
     }
 

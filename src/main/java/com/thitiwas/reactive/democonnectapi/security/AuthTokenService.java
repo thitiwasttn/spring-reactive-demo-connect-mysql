@@ -18,4 +18,6 @@ public interface AuthTokenService {
     Mono<Map<String, Object>> verify(final String token);
     Mono<DecodedJWT> verifyV2(final String token);
 
+    Mono<Long> getClaimId();
+
 }

@@ -21,7 +21,7 @@ public class DefaultUserDetailsJwtClaimsConverterImpl implements DefaultUserDeta
     @Override
     public DefaultUserDetails convert(final Map<String, Object> claims) {
         return DefaultUserDetails.builder()
-                .id(UUID.fromString((String) claims.get("id")))
+                .id((String) claims.get("id"))
                 .authorities((List<String>) claims.get("authorities"))
                 .build();
     }

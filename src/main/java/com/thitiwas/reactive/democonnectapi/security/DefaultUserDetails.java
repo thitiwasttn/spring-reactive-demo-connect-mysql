@@ -27,7 +27,7 @@ public class DefaultUserDetails implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    private final UUID id;
+    private final String id;
 
     private List<String> authorities;
 

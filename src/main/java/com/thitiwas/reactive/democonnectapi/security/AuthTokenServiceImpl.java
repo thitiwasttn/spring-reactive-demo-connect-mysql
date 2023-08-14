@@ -10,6 +10,11 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 import reactor.core.publisher.Mono;
 
@@ -90,4 +95,15 @@ public class AuthTokenServiceImpl implements AuthTokenService {
         });
     }
 
+    @Override
+    public Mono<Long> getClaimId() {
+        return ReactiveSecurityContextHolder.getContext()
+                .map(SecurityContext::getAuthentication)
+                .map(authentication -> (DecodedJWT) authentication.getPrincipal())
+                .map(decodedJWT -> {
+                    String string = decodedJWT.getClaim(claimId).asString();
+                    log.info("string :{}", string);
+                    return Long.valueOf(string);
+                });
+    }
 }
