@@ -69,4 +69,9 @@ public class UserController {
                         .objectValue(userEntity)
                         .build()));
     }
+
+    @GetMapping("/s/user/all")
+    public Flux<UserModel> testGetAllUsers() {
+        return userService.getAllUser();
+    }
 }
