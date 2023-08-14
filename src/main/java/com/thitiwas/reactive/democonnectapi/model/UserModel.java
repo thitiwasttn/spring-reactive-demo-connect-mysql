@@ -19,5 +19,7 @@ public class UserModel {
     private String isConfirm;
     private String isDelete;
     private String telno;
+    private Long createDate;
+    private String createDateStr;
 
 }

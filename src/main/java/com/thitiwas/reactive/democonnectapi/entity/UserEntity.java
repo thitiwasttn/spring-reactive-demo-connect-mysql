@@ -6,7 +6,6 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 
 @Table(name = "user")
@@ -31,7 +30,7 @@ public class UserEntity {
     private String accessToken;
 
     @Column("login_expired")
-    private LocalDateTime LoginExpired;
+    private LocalDateTime loginExpired;
 
     @Column("create_date")
     private LocalDateTime createDate;
